@@ -1,0 +1,16 @@
+/virenv
+./virenv
+./virenv/*
+
+./logs
+
+./logs/*
+
+.env
+./.env
+
+./db.sqlite3
+db.sqlite3
+
+.vscode
+./.vscode
