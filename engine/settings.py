@@ -58,7 +58,6 @@ INSTALLED_APPS = [
     'drf_spectacular',
 
     # internal apps
-    'uauth',
     'aqmonitor',
     'accounts',
 ]
