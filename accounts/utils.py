@@ -148,40 +148,37 @@ def saveResetToken(user, token):
 
 #   sendEmail(email, subject, message)
 
-# def sendEmail(email, subject, message, name = None):
-#   """Sends an email to the user using MailJet"""
+import requests
 
-#   # set up the MailJet client
-#   emailSender = os.getenv('EMAIL_SENDER')
-#   emailSenderAddress = os.getenv('EMAIL_SENDER_ADDRESS')
-#   apiKey = os.environ['MAILJET_API_KEY']
-#   apiSecret = os.environ['MAILJET_SECRET_KEY']
-  
-#   mailjet = Client(auth=(apiKey, apiSecret), version='v3.1')
+def sendSMS(phoneNumber, message, name=None):
+  """Sends an SMS to the user using MNotify"""
 
-#   # send the email
-#   result = mailjet.send.create({
-#     'Messages': [
-#       {
-#         "From": {
-#           "Email": emailSenderAddress,
-#           "Name": emailSender
-#         },
-#         "To": [
-#           {
-#             "Email": email,
-#             "Name": name
-#           }
-#         ],
-#         "Subject": subject,
-#         "HTMLPart": message
-#       }
-#     ]
-#   })
+  # set up the MNotify client
+  apiKey = os.environ['MNOTIFY_API_KEY']
+  endPoint = 'https://api.mnotify.com/api/sms/quick'
 
-#   if result.status_code == 200:
-#     print(subject + " email sent successfully to " + email)
-#   else:
-#     print("Failed to send " + subject + " email to " + email)
-#     print(result.json()) # print the error 
+  data = {
+    'recipient[]': [phoneNumber],
+    'sender': 'mNotify',
+    'message': message,
+    'is_schedule': False,
+    'schedule_date': ''
+  }
+
+  # construst the endpoint URL
+  url = endPoint + '?key=' + apiKey
+
+  # send the SMS
+  response = requests.post(url, data)
+
+  # parse the response
+  try:
+    response.raise_for_status()
+    data = response.json()
+  except requests.exceptions.HTTPError as err:
+    # The HTTP request raised an error
+    print(f"HTTP error: {err}")
+  except Exception as err:
+    # Something else went wrong (e.g., connection error)
+    print(f"Other error: {err}")
     

@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     # internal apps
     'aqmonitor',
     'accounts',
+    'forecasts',
 ]
 
 MIDDLEWARE = [

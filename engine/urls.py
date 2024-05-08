@@ -10,4 +10,5 @@ urlpatterns = [
     path('blueprint/docs/', SpectacularRedocView.as_view(url_name='blueprint.schema'), name='blueprint.redoc'),
     path('accounts/', include('accounts.urls')),
     path('aqmonitor/', include('aqmonitor.urls')),
+    path('forecasts/', include('forecasts.urls')),
 ]

@@ -38,6 +38,8 @@ def getLocationAQ(request):
     except Exception as exception:
         return Response({"error": "Could not get the air quality readings in your location!" + str(exception)}, status=status.HTTP_400_BAD_REQUEST)
     
+    
+
     return Response(currentReadings, status=status.HTTP_200_OK)
 
 
