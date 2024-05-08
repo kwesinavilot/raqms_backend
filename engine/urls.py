@@ -9,4 +9,5 @@ urlpatterns = [
     path('blueprint/schema/', SpectacularAPIView.as_view(), name='blueprint.schema'),
     path('blueprint/docs/', SpectacularRedocView.as_view(url_name='blueprint.schema'), name='blueprint.redoc'),
     path('accounts/', include('accounts.urls')),
+    path('aqmonitor/', include('aqmonitor.urls')),
 ]
