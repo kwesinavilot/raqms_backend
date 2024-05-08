@@ -159,7 +159,7 @@ def sendSMS(phoneNumber, message, name=None):
 
   data = {
     'recipient[]': [phoneNumber],
-    'sender': 'mNotify',
+    'sender': 'Navilot',
     'message': message,
     'is_schedule': False,
     'schedule_date': ''
@@ -169,16 +169,18 @@ def sendSMS(phoneNumber, message, name=None):
   url = endPoint + '?key=' + apiKey
 
   # send the SMS
+  print(f"Sending SMS to {phoneNumber}...")
   response = requests.post(url, data)
 
   # parse the response
   try:
     response.raise_for_status()
     data = response.json()
-  except requests.exceptions.HTTPError as err:
-    # The HTTP request raised an error
-    print(f"HTTP error: {err}")
-  except Exception as err:
-    # Something else went wrong (e.g., connection error)
-    print(f"Other error: {err}")
+
+    if data['status'] == 'success':
+      print(f"SMS sent successfully to {phoneNumber}")
+    else:
+      print(f"Something went wrong while sending SMS: {data['message']}")
+  except Exception as exception:
+    print(f"Couldn't send the SMS: {exception}")
     

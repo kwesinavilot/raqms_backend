@@ -1,4 +1,4 @@
-from .utils import getLatestClarityReadings
+from .utils import getLatestClarityReadings, sendAQIAlert
 from .serializers import *
 from rest_framework.response import Response
 from rest_framework import status
@@ -38,7 +38,8 @@ def getLocationAQ(request):
     except Exception as exception:
         return Response({"error": "Could not get the air quality readings in your location!" + str(exception)}, status=status.HTTP_400_BAD_REQUEST)
     
-    
+    # send the user an SMS telling them of the air quality at their location
+    sendAQIAlert(request.user.phoneNumber, currentReadings['overallAQI'])
 
     return Response(currentReadings, status=status.HTTP_200_OK)
 

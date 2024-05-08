@@ -3,6 +3,7 @@ import json
 import datetime
 import os
 from .aqi_calculator_us import calculateAQI
+from accounts.utils import sendSMS
 
 def getLatestClarityReadings(deviceID):
     print("Fetching data from Clarity...")
@@ -52,3 +53,9 @@ def getLatestClarityReadings(deviceID):
         print('Clarity data is empty.')
         return []
     
+def sendAQIAlert(phoneNumber, overallAQI):
+    # craft the message
+    message = f"""Hello, the air quality at your current location is {overallAQI}. Put on a nose mask!"""
+
+    # send the message
+    sendSMS(phoneNumber, message)
